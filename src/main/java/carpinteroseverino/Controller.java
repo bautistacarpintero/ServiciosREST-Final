@@ -11,5 +11,7 @@ public class Controller {
     public String index() {
         return "Congratulations from BlogController.java";
     }
-    
+
 }
+
+
