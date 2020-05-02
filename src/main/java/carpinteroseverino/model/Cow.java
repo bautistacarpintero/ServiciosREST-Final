@@ -16,6 +16,22 @@ public class Cow {
     private int birthCount;
     private double weight;
 
+
+
+
+    private int testUpdateCol;
+
+    public int getTestUpdateCol() {
+        return testUpdateCol;
+    }
+
+    public void setTestUpdateCol(int testUpdateCol) {
+        this.testUpdateCol = testUpdateCol;
+    }
+
+
+
+
     @ManyToOne
     private Herd herd;
 
