@@ -1,5 +1,7 @@
 package carpinteroseverino.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,7 @@ public class CowBCS {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int cowId;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date date;
     private int bcs;
 

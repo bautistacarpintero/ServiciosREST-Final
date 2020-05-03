@@ -13,6 +13,7 @@ public class Herd {
 
     @OneToMany(mappedBy="herd")
     private List<Cow> cows;
+
     private String location;
 
     public Herd() {
@@ -50,5 +51,14 @@ public class Herd {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "Herd{" +
+                "id=" + id +
+                ", cows=" + cows +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

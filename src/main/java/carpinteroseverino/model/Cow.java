@@ -1,5 +1,7 @@
 package carpinteroseverino.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,25 +13,12 @@ public class Cow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int electronicId;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthdate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date lastDateOfBirth;
     private int birthCount;
     private double weight;
-
-
-
-
-    private int testUpdateCol;
-
-    public int getTestUpdateCol() {
-        return testUpdateCol;
-    }
-
-    public void setTestUpdateCol(int testUpdateCol) {
-        this.testUpdateCol = testUpdateCol;
-    }
-
-
 
 
     @ManyToOne
@@ -101,5 +90,10 @@ public class Cow {
 
     public void setHerd(Herd herd) {
         this.herd = herd;
+    }
+
+    @Override
+    public String toString() {
+        return "Cow ="+id;
     }
 }

@@ -1,12 +1,11 @@
 package carpinteroseverino;
 
-import carpinteroseverino.model.Cow;
+import carpinteroseverino.model.Herd;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CowRepository extends JpaRepository<Cow,Integer> {
-
+public interface HerdRepository extends JpaRepository<Herd,Integer> {
 
 
 }
