@@ -1,5 +1,8 @@
 package carpinteroseverino.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +14,9 @@ public class Herd {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToMany(mappedBy="herd")
+    @OneToMany(mappedBy = "herd")
+
+    @JsonManagedReference
     private List<Cow> cows;
 
     private String location;
@@ -25,15 +30,19 @@ public class Herd {
         this.location = location;
     }
 
-    public boolean addCow(Cow cow){
+    public int getId() {
+        return id;
+    }
+
+    public boolean addCow(Cow cow) {
         return this.cows.add(cow);
     }
 
-    public boolean removeCow(Cow cow){
+    public boolean removeCow(Cow cow) {
         return this.cows.remove(cow);
     }
 
-    public void deleteAllCow(Cow cow){
+    public void deleteAllCow(Cow cow) {
         this.cows = new ArrayList<>();
     }
 
@@ -51,6 +60,24 @@ public class Herd {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @JsonProperty
+    public Double getAvgBCS() {
+        if (cows.size() == 0)
+            return null;
+        else {
+            double sum = 0.0;
+            int count = 0;
+            for (Cow cow : cows) {
+                Integer bcs = cow.getLastBCS();
+                if (bcs != null) {
+                    sum += bcs;
+                    count++;
+                }
+            }
+            return count == 0 ? null : sum / count;
+        }
     }
 
     @Override

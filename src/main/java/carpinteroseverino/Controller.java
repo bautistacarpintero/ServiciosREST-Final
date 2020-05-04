@@ -63,12 +63,27 @@ public class Controller {
 
     @RequestMapping(value = "/cow/{id}/bcs", method = RequestMethod.POST)
     public ResponseEntity<CowBCS> addBCS(@PathVariable("id") int id, @Param("bcs") int bcs){
-        CowBCS cowBCS = new CowBCS(id, new Date(),bcs);
+        Cow cow = cowRepository.findOne(id);
+        CowBCS cowBCS = new CowBCS(cow, new Date(), bcs);
         bcsRepository.save(cowBCS);
 
         return new ResponseEntity<CowBCS>(cowBCS, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/cow/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Cow> getCow(@PathVariable("id") int id){
+        Cow cow = cowRepository.findOne(id);
+        return new ResponseEntity<Cow>(cow, HttpStatus.OK);
+
+    }
+
+
+    @RequestMapping(value = "/herd/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Herd> getHerd(@PathVariable("id") int id){
+        Herd herd = herdRepository.findOne(id);
+        return new ResponseEntity<Herd>(herd, HttpStatus.OK);
+
+    }
 
 //    @GetMapping("/test")
 //    public void initHerd(){

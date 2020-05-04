@@ -1,11 +1,9 @@
 package carpinteroseverino.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,20 +12,24 @@ public class CowBCS {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int cowId;
+
+    @ManyToOne
+    @JsonBackReference
+    private Cow cow;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date date;
     private int bcs;
 
 
     public CowBCS() {
-
     }
 
-    public CowBCS(int cowId, Date date, int bcs) {
-        this.cowId = cowId;
+    public CowBCS(Cow cow, Date date, int bcs) {
+        this.cow = cow;
         this.date = date;
         this.bcs = bcs;
+        this.cow.addBCS(this);
     }
 
     public int getId() {
@@ -38,12 +40,12 @@ public class CowBCS {
         this.id = id;
     }
 
-    public int getCowId() {
-        return cowId;
+    public Cow getCow() {
+        return cow;
     }
 
-    public void setCowId(int cowId) {
-        this.cowId = cowId;
+    public void setCow(Cow cow) {
+        this.cow = cow;
     }
 
     public Date getDate() {
