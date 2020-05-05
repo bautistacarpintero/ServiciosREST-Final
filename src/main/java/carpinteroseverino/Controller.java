@@ -1,11 +1,7 @@
 package carpinteroseverino;
 
-import carpinteroseverino.model.Cow;
-import carpinteroseverino.model.CowBCS;
-import carpinteroseverino.model.Herd;
-import carpinteroseverino.repositories.BCSRepository;
-import carpinteroseverino.repositories.CowRepository;
-import carpinteroseverino.repositories.HerdRepository;
+import carpinteroseverino.model.*;
+import carpinteroseverino.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +22,12 @@ public class Controller {
 
     @Autowired
     BCSRepository bcsRepository;
+
+    @Autowired
+    AnimalAlertRepository animalAlertRepository;
+
+    @Autowired
+    HerdAlertRepository herdAlertRepository;
 
     @RequestMapping("/")
     public String index() {
@@ -116,11 +118,33 @@ public class Controller {
             Cow cow = cowRepository.findOne(id);
             CowBCS cowBCS = new CowBCS(cow, new Date(), bcs);
             bcsRepository.save(cowBCS);
+
+            checkAlert(cow, bcs);
+
             return new ResponseEntity<CowBCS>(cowBCS, HttpStatus.OK);
 
         } catch (NullPointerException e) {
 
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //TODO CHEQUEO ALERT, cambiar void por response
+
+    public void checkAlert(Cow cow, int bcs) {
+        List<AnimalAlert> list = animalAlertRepository.findByCow(cow);
+
+        for (AnimalAlert animalAlert : list)
+            if (animalAlert.checkThreshold(bcs))
+                System.out.println("SEND ALERT");
+
+        Herd herd = cow.getHerd();
+
+        if (herd != null) {
+            HerdAlert herdAlert = herdAlertRepository.findByHerd(herd);
+            if (herdAlert.checkThreshold(herd.getAvgBCS()))
+                System.out.println("SEND ALERT");
+
         }
     }
 
@@ -138,10 +162,41 @@ public class Controller {
 
     }
 
-//    @GetMapping("/test")
-//    public void initHerd(){
-//        herdRepository.save(new Herd());
-//    }
+
+    @RequestMapping(value = "/cow/{id}/alert", method = RequestMethod.POST)
+    public ResponseEntity<AnimalAlert> addAnimalAlert(@PathVariable("id") int id, @RequestBody Map<String, Object> body) {
+        try {
+            Cow cow = cowRepository.findOne(id);
+            int threshold = (Integer) body.get("bcsThreshold");
+            String compOp = (String) body.get("compOp");
+            AnimalAlert alert = new AnimalAlert(cow, threshold, compOp);
+
+            animalAlertRepository.save(alert);
+
+            return new ResponseEntity<AnimalAlert>(alert, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/herd/{id}/alert", method = RequestMethod.POST)
+    public ResponseEntity<HerdAlert> addHerdAlert(@PathVariable("id") int id, @RequestBody Map<String, Object> body) {
+        try {
+            Herd herd = herdRepository.findOne(id);
+            int threshold = (Integer) body.get("bcsThreshold");
+            String compOp = (String) body.get("compOp");
+            HerdAlert alert = new HerdAlert(herd, threshold, compOp);
+
+            herdAlertRepository.save(alert);
+
+            return new ResponseEntity<HerdAlert>(alert, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }
 

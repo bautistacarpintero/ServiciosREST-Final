@@ -1,9 +1,11 @@
 package carpinteroseverino.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.context.annotation.ScopeMetadata;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class HerdAlert {
@@ -11,16 +13,24 @@ public class HerdAlert {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int herdId;
+
+    @ManyToOne
+    @JsonBackReference
+    @NotNull
+    private Herd herd;
+
+    private String compOp;
+
     private int bcsThreshold;
 
 
     public HerdAlert() {
     }
 
-    public HerdAlert(int herdId, int bcsThreshold) {
-        this.herdId = herdId;
+    public HerdAlert(Herd herd, int bcsThreshold, String compOp) {
+        this.herd = herd;
         this.bcsThreshold = bcsThreshold;
+        this.compOp = compOp;
     }
 
 
@@ -32,12 +42,12 @@ public class HerdAlert {
         this.id = id;
     }
 
-    public int getHerdId() {
-        return herdId;
+    public Herd getHerd() {
+        return herd;
     }
 
-    public void setHerdId(int herdId) {
-        this.herdId = herdId;
+    public void setHerd(Herd herd) {
+        this.herd = herd;
     }
 
     public int getBcsThreshold() {
@@ -46,5 +56,27 @@ public class HerdAlert {
 
     public void setBcsThreshold(int bcsThreshold) {
         this.bcsThreshold = bcsThreshold;
+    }
+
+    public String getCompOp() {
+        return compOp;
+    }
+
+    public void setCompOp(String compOp) {
+        this.compOp = compOp;
+    }
+
+    public boolean checkThreshold(double bcs) {
+        if (compOp.equals("GT"))
+            return bcs > bcsThreshold;
+        else if (compOp.equals("LT"))
+            return bcs < bcsThreshold;
+
+        return false;
+    }
+
+    @JsonProperty
+    public Integer getHerdId() {
+        return herd == null ? null : herd.getId();
     }
 }

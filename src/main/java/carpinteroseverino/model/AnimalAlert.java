@@ -1,10 +1,11 @@
 package carpinteroseverino.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class AnimalAlert {
@@ -12,16 +13,23 @@ public class AnimalAlert {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int animalId;
+
+    @ManyToOne
+    @JsonBackReference
+    @NotNull
+    private Cow cow;
+
+    private String compOp;
     private int bcsThreshold;
 
 
     public AnimalAlert() {
     }
 
-    public AnimalAlert(int animalId, int bcsThreshold) {
-        this.animalId = animalId;
+    public AnimalAlert(Cow cow, int bcsThreshold, String compOp) {
+        this.cow = cow;
         this.bcsThreshold = bcsThreshold;
+        this.compOp = compOp; //GT: GreaterThan, LT:LesserThan
     }
 
 
@@ -33,12 +41,20 @@ public class AnimalAlert {
         this.id = id;
     }
 
-    public int getAnimalId() {
-        return animalId;
+    public String getCompOp() {
+        return compOp;
     }
 
-    public void setAnimalId(int animalId) {
-        this.animalId = animalId;
+    public void setCompOp(String compOp) {
+        this.compOp = compOp;
+    }
+
+    public Cow getCow() {
+        return cow;
+    }
+
+    public void setCow(Cow cow) {
+        this.cow = cow;
     }
 
     public int getBcsThreshold() {
@@ -48,4 +64,29 @@ public class AnimalAlert {
     public void setBcsThreshold(int bcsThreshold) {
         this.bcsThreshold = bcsThreshold;
     }
+
+    public boolean checkThreshold(int bcs) {
+        if (compOp.equals("GT"))
+            return bcs > bcsThreshold;
+        else if (compOp.equals("LT"))
+            return bcs < bcsThreshold;
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "AnimalAlert{" +
+                "id=" + id +
+                ", cow=" + cow +
+                ", compOp='" + compOp + '\'' +
+                ", bcsThreshold=" + bcsThreshold +
+                '}';
+    }
+
+    @JsonProperty
+    public Integer getCowId() {
+        return cow == null ? null : cow.getId();
+    }
+
 }
