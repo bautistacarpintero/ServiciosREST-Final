@@ -41,8 +41,15 @@ public class Controller {
 
     @RequestMapping(value = "/cow/{id}", method = RequestMethod.GET)
     public ResponseEntity<Cow> getCow(@PathVariable("id") int id) {
-        Cow cow = cowRepository.findOne(id);
-        return new ResponseEntity<Cow>(cow, HttpStatus.OK);
+
+        try {
+            Cow cow = cowRepository.findOne(id);
+            return new ResponseEntity<Cow>(cow, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @RequestMapping(value = "/cows", method = RequestMethod.GET)
@@ -60,8 +67,13 @@ public class Controller {
 
     @RequestMapping(value = "/herd/{id}", method = RequestMethod.GET)
     public ResponseEntity<Herd> getHerd(@PathVariable("id") int id) {
-        Herd herd = herdRepository.findOne(id);
-        return new ResponseEntity<Herd>(herd, HttpStatus.OK);
+        try {
+            Herd herd = herdRepository.findOne(id);
+            return new ResponseEntity<Herd>(herd, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
 
     }
 
@@ -93,7 +105,6 @@ public class Controller {
             cowRepository.save(cow);
         }
 
-        //TODO
         return ResponseEntity.ok("Herd " + herdId + " and cow " + cowId + " was successfully bound!");
     }
 
