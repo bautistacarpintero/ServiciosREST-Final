@@ -1,5 +1,6 @@
 package carpinteroseverino.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,18 +9,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Herd {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToMany(mappedBy = "herd")
+    private String location;
 
+    @JsonProperty
+    public Double getAvgBCS() {
+        if (cows.size() == 0)
+            return null;
+        else {
+            double sum = 0.0;
+            int count = 0;
+            for (Cow cow : cows) {
+                Integer bcs = cow.getLastBCS();
+                if (bcs != null) {
+                    sum += bcs;
+                    count++;
+                }
+            }
+            return count == 0 ? null : sum / count;
+        }
+    }
+
+    @OneToMany(mappedBy = "herd")
     @JsonManagedReference
     private List<Cow> cows;
 
-    private String location;
 
     public Herd() {
         this.cows = new ArrayList<>();
@@ -62,23 +82,6 @@ public class Herd {
         this.location = location;
     }
 
-    @JsonProperty
-    public Double getAvgBCS() {
-        if (cows.size() == 0)
-            return null;
-        else {
-            double sum = 0.0;
-            int count = 0;
-            for (Cow cow : cows) {
-                Integer bcs = cow.getLastBCS();
-                if (bcs != null) {
-                    sum += bcs;
-                    count++;
-                }
-            }
-            return count == 0 ? null : sum / count;
-        }
-    }
 
     @Override
     public String toString() {

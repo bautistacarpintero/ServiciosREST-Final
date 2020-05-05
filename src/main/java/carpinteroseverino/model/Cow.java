@@ -117,6 +117,12 @@ public class Cow {
         return bcs.size() == 0 ? null : bcs.get(bcs.size()-1).getBcs();
     }
 
+
+    @JsonIgnore
+    public List<CowBCS> getBcs() {
+        return bcs;
+    }
+
     @Override
     public String toString() {
         return "Cow ="+id;

@@ -1,4 +1,4 @@
-package carpinteroseverino;
+package carpinteroseverino.repositories;
 
 import carpinteroseverino.model.Herd;
 import org.springframework.data.jpa.repository.JpaRepository;
