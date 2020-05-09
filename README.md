@@ -7,7 +7,7 @@ El puntaje condición corporal es un valor numérico entre 1 y 9 que es asignado
 un veterinario experto mientras las vacas son ordeñadas o pasan por una manga. El puntaje de
 condición corporal es un indicador que estima la grasa corporal almacenada y el balance
 energético acumulado de las vacas. Este indicador influye en la producción de leche,
-reproducción y salud de vacas destinadas a la producción láctea o la producció́ n de carne. En
+reproducción y salud de vacas destinadas a la producción láctea o la producción de carne. En
 este sentido, el ISISTAN ha desarrollado, mediante una beca doctoral, un sistema de
 estimación de la condición corporal utilizando imágenes del lomo de una vaca a la cual se pasa
 por un proceso de estimación. Este “proceso de estimación” utiliza una reconocida técnica de
