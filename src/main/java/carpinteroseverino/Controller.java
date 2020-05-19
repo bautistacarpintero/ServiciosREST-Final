@@ -60,6 +60,7 @@ public class Controller {
         return ResponseEntity.ok(cowRepository.findAll());
     }
 
+
     @RequestMapping(value = "/herd", method = RequestMethod.POST)
     public ResponseEntity<Herd> createHerd(@RequestBody Herd herd) {
         Herd newHerd = herd;
