@@ -1,6 +1,7 @@
 package carpinteroseverino.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.context.annotation.ScopeMetadata;
 
@@ -73,6 +74,14 @@ public class HerdAlert {
             return bcs < bcsThreshold;
 
         return false;
+    }
+
+    @JsonIgnore
+    public String getCompOpText() {
+        if (compOp.equals("GT"))
+            return "greater than";
+        else
+            return "lesser than";
     }
 
     @JsonProperty

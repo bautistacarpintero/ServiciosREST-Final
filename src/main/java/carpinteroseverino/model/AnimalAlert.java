@@ -2,6 +2,7 @@ package carpinteroseverino.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -29,7 +30,7 @@ public class AnimalAlert {
     public AnimalAlert(Cow cow, int bcsThreshold, String compOp) {
         this.cow = cow;
         this.bcsThreshold = bcsThreshold;
-        this.compOp = compOp; //GT: GreaterThan, LT:LesserThan
+        this.compOp = compOp; //GT: GreaterThan, LT: LesserThan
     }
 
 
@@ -43,6 +44,14 @@ public class AnimalAlert {
 
     public String getCompOp() {
         return compOp;
+    }
+
+    @JsonIgnore
+    public String getCompOpText() {
+        if (compOp.equals("GT"))
+            return "greater than";
+        else
+            return "lesser than";
     }
 
     public void setCompOp(String compOp) {
