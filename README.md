@@ -1,29 +1,9 @@
-# Programación Orientada a Servicios
-#### Trabajo final de catedra
+# Computación Orientada a Servicios
+### Sistema de gestión para la condición corporal de bovinos 
+> Trabajo final de catedra
 
+![app-image](/screenshots/app-icon.png)
 
-#### Contexto
-El puntaje condición corporal es un valor numérico entre 1 y 9 que es asignado a una vaca por
-un veterinario experto mientras las vacas son ordeñadas o pasan por una manga. El puntaje de
-condición corporal es un indicador que estima la grasa corporal almacenada y el balance
-energético acumulado de las vacas. Este indicador influye en la producción de leche,
-reproducción y salud de vacas destinadas a la producción láctea o la producción de carne. En
-este sentido, el ISISTAN ha desarrollado, mediante una beca doctoral, un sistema de
-estimación de la condición corporal utilizando imágenes del lomo de una vaca a la cual se pasa
-por un proceso de estimación. Este “proceso de estimación” utiliza una reconocida técnica de
-predicción basada en imágenes llama deep learning. El objetivo de este trabajo es utilizar los
-conceptos de Web Services, tanto SOAP (parcial de la materia) como REST (final de la
-materia), y el conocimiento tecnológico adquiridos en la cátedra para generar un sistema que
-permita administrar los valores predichos por el sistema de estimación de la condición corporal.
+La condición corporal es la evaluación visual de la cantidad de músculo y grasa que cubren los huesos del cuerpo, existiendo una alta correlación entre la clasificación de condición corporal y el porcentaje de grasa corporal de una vaca. Es una puntuación numérica, que toma valores entre 1 y 9 la cual se  realiza observando puntos específicos del cuerpo del animal, por lo que se evalúa independientemente del peso corporal o llenado del abdomen por alimentación y/o preñado. Este es uno de los mejores indicadores del estado nutricional de la vaca, con lo cual es un importante determinante del desempeño reproductivo las mismas. 
 
-#### Casos de Uso (iniciales)
-* Un sistema de IA ingresa agrega una bcs de un animal (mockeado).
-* Un usuario de de alta un animal.
-* Un usuario asocia un animal a un rodeo.
-* Un usuario obtiene toda la información de un animal, entre ellos el último bcs.
-* Un usuario obtiene toda la información de un rodeo, entre ellos el bsc promedio
-* Un usuario configura una alerta para un determinado animal.
-* Un usuario configura una alerta para un determinado rodeo.
-
-#
-> *En desarrollo*
+El objetivo de este trabajo final es utilizar los conocimientos de aprendidos en la cátedra _‘Computación Orientada a Servicios’_ para implementar una API REST, utilizando Spring Boot, que provea los servicios suficientes para el manejo y administración de los valores de condición corporal de bovinos, tanto de forma individual así como también el promedio de los valores de las vacas que pertenezcan a un mismo rodeo. Adicionalmente se mantendrá persistencia del historial de estos valores para cada animal y se permitirá programar alertas que notifican cuando el valor de condición corporal sobrepase o disminuya determinado límite, tanto para un determinado animal como valor promedio de un rodeo.
