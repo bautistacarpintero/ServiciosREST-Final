@@ -2,7 +2,7 @@
 ### Sistema de gestión para la condición corporal de bovinos 
 > Trabajo final de catedra
 
-![app-image](/screenshots/app-icon.png)
+![icon](/src/main/resources/icon.png)
 
 La condición corporal es la evaluación visual de la cantidad de músculo y grasa que cubren los huesos del cuerpo, existiendo una alta correlación entre la clasificación de condición corporal y el porcentaje de grasa corporal de una vaca. Es una puntuación numérica, que toma valores entre 1 y 9 la cual se  realiza observando puntos específicos del cuerpo del animal, por lo que se evalúa independientemente del peso corporal o llenado del abdomen por alimentación y/o preñado. Este es uno de los mejores indicadores del estado nutricional de la vaca, con lo cual es un importante determinante del desempeño reproductivo las mismas. 
 
